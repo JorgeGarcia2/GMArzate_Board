@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   kbd.h
  * Author: jorge
  *
@@ -25,7 +25,8 @@ void KBD_Init(void);
 
 char KBD_GetChar(void);
 
+void KBD_InChar(void);
+
 
 
 #endif	/* KBD_H */
-

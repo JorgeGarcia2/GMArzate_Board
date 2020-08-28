@@ -8,11 +8,13 @@
 
 #define M1  LATDbits.LATD0
 #define M2  LATDbits.LATD1
-int count = 0;
-extern bool reqKey;
-uint8_t x;
 
-void __interrupt() Interrupts()
+int count = 0;
+char c = 0;
+/*uint8_t newChar;
+bool busyRB = false;*/
+
+void __interrupt() myISR()
 {
     if (INTCONbits.TMR0IF)
     {
@@ -26,53 +28,65 @@ void __interrupt() Interrupts()
         }
         INTCONbits.TMR0IF = OFF;
     }
-    if (INTCONbits.RBIF)
+    /*if (INTCONbits.RBIF && !busyRB)
     {
+        busyRB = 1;
+        newChar = (PORTB & 0xF0)>> 4;
+        if(newChar == 14 || newChar == 13 || newChar == 11 || newChar == 7)
+        {
+            //c = newChar;
+            c = KBD_GetChar();
+        }
         INTCONbits.RBIF = OFF;
-        x = (PORTB & 0xF0)>> 4;
-        if((reqKey) && (x != 15))
-            reqKey = false;
-    }
+        busyRB = 0;
+    }*/
 
 }
 
 
-void main(void) 
+void main(void)
 {
     SYSTEM_Init();
+
     TIMER0_SetH(0x48);
     TIMER0_SetL(0xE5);
-
     BLED_Color(BL1,0,0);
     BLED_Color(BL2,0,1);
-    
+
+    __delay_ms(1000);
     my_vprintf("BIENVENIDO\n\n");
-    char c;
 
     while (1)
     {
-        BLED_Color(BL2,1,0);
+        BLED_Toggle(BL2);
+        KBD_InChar();
         c = KBD_GetChar();
-        BLED_Color(BL2,0,1);
-        if (c == 'A')
+        switch (c)
         {
-            M1 = 0;
-            M2 = 0;
-            __delay_ms(1000);
-            my_vprintf("Motor girando a la Derecha\n\n");
-            M1 = 0;
-            M2 = 1;
-        }
-        if (c == 'B')
-        {
-            M1 = 0;
-            M2 = 0;
-            __delay_ms(1000);
-            my_vprintf("Motor girando a la Izquierda\n\n");
-            M1 = 1;
-            M2 = 0;
-        }
+            case 'A':
+                my_vprintf("Motor girando a la Derecha\n\n");
+                M1 = 0;
+                M2 = 0;
+                __delay_ms(1000);
+                M1 = 0;
+                M2 = 1;
+                break;
+            case 'B':
+                my_vprintf("Motor girando a la Izquierda\n\n");
+                M1 = 0;
+                M2 = 0;
+                __delay_ms(1000);
+                M1 = 1;
+                M2 = 0;
+                break;
+            case 'C':
+                my_vprintf("Motor detenido\n\n");
+                M1 = 0;
+                M2 = 0;
+            default:
+                my_vprintf("La ultima tecla fue %u\n\n", c);
 
+        }
         __delay_ms(2000);
     }
 }

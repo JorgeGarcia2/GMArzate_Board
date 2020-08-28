@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-To request to license the code under the MLA license (www.microchip.com/mla_license), 
+To request to license the code under the MLA license (www.microchip.com/mla_license),
 please contact mla_licensing@microchip.com
 *******************************************************************************/
 
@@ -65,8 +65,8 @@ void SYSTEM_Init(void)
     KBD_Init();
     //Using interrupts
     INTERRUPT_Init();
-    INTERRUPT_Rb();
-    
+    //INTERRUPT_Rb();
+
     //Using timer 0
     TIMER0_Int(0, 0, 0, 0);
     TIMER0_SetPs(PS6);
@@ -74,8 +74,8 @@ void SYSTEM_Init(void)
 
     //Using SW3 and SW4
     //BUTTON_Enable(SW3);
-    
-    //Using LEDs 
+
+    //Using LEDs
     BLED_Enable(BL1);
     BLED_Enable(BL2);
     //LED_Enable(L1);
@@ -84,9 +84,11 @@ void SYSTEM_Init(void)
     //Using module ESUART
     SERIAL_Init(9600);
 
-    //Using bridge H
+    //Config GPIO
     TRISDbits.RD0 = 0;
-    TRISDbits.RD0 = 0;
-    
+    TRISDbits.RD1 = 0;
+    LATDbits.LATD0 = 0;
+    LATDbits.LATD1 = 0;
+
 
 }

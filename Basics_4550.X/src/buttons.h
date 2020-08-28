@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   buttons.h
  * Author: jorge
  *
@@ -11,10 +11,10 @@
 #include<xc.h>
 #include <stdbool.h>
 
-#define SW1_PORT  PORTBbits.RB0 //GMArzate BOARD Switch 1  
+#define SW1_PORT  PORTBbits.RB0 //GMArzate BOARD Switch 1
 #define SW2_PORT  PORTBbits.RB1 //GMArzate BOARD Switch 2
-#define SW3_PORT  PORTBbits.RB2 //GMArzate BOARD Switch 3  
-#define SW4_PORT  PORTBbits.RB3 //GMArzate BOARD Switch 4  
+#define SW3_PORT  PORTBbits.RB2 //GMArzate BOARD Switch 3
+#define SW4_PORT  PORTBbits.RB3 //GMArzate BOARD Switch 4
 
 #define SW1_TRIS  TRISBbits.TRISB0
 #define SW2_TRIS  TRISBbits.TRISB1
@@ -38,4 +38,3 @@ bool BUTTON_IsPressed(BUTTON button);
 
 
 #endif	/* BUTTONS_H */
-

@@ -7,7 +7,7 @@ char keyPad[5][4] = {
     {'*','0','#','D'},
     {0,0,0,0}
 };
-bool reqKey = false;
+
 
 
 void KBD_Init(void)
@@ -22,8 +22,7 @@ char KBD_GetChar(void)
 {
     char key = 0;
     int row = 0, col = 0;
-    reqKey = true;
-    while(reqKey);
+
     for(col = 0; col <= 3; col++)
     {
         c1 = col == 0? 0:1;
@@ -62,4 +61,14 @@ char KBD_GetChar(void)
     c3 = 0;
     c4 = 0;
     return key;
+}
+
+void KBD_InChar(void)
+{
+    while(1)
+    {
+        uint8_t newChar= (PORTB & 0xF0)>> 4;
+        if(newChar == 14 || newChar == 13 || newChar == 11 || newChar == 7)
+            return;
+    }
 }

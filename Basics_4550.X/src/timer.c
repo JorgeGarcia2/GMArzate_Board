@@ -17,7 +17,7 @@ void TIMER0_SetPs(PRESCALE prescale)
     {
         case PS0: //Timer 0 prescale = 000
             T0CONbits.T0PS0 = 0;
-            T0CONbits.T0PS1 = 0; 
+            T0CONbits.T0PS1 = 0;
             T0CONbits.T0PS2 = 0;
             break;
         case PS1:
@@ -25,7 +25,7 @@ void TIMER0_SetPs(PRESCALE prescale)
             T0CONbits.T0PS1 = 0;
             T0CONbits.T0PS2 = 0;
             break;
-        case PS2: 
+        case PS2:
             T0CONbits.T0PS0 = 0;
             T0CONbits.T0PS1 = 1;
             T0CONbits.T0PS2 = 0;
@@ -55,18 +55,18 @@ void TIMER0_SetPs(PRESCALE prescale)
             T0CONbits.T0PS1 = 1;
             T0CONbits.T0PS2 = 1;
     }
-    
+
 }
 
 void TIMER1_Int(bool t1_cs, bool t0_cs, bool t0_se, bool t0_psa)
 {
     T1CONbits.TMR1ON = 1; //Timer1: ON / OFF
     T1CONbits.RD16 = 1; //Timer1: use one 16-bit register / use two 8-bit register
-    T1CONbits.T1RUN = t0_cs; //Timer1 Device clock: derived from Timer1 oscillator / derived from another source 
+    T1CONbits.T1RUN = t0_cs; //Timer1 Device clock: derived from Timer1 oscillator / derived from another source
     T1CONbits.T1OSCEN = t0_se; //Timer1 oscillator: enabled / shut off
     T1CONbits.T1SYNC = t0_psa; //Timer1 External Clock Input Synchronization: Do not synchronize / synchronize
     T1CONbits.TMR1CS = t1_cs; //Timer1 Clock Source: External(RC0) or Timer1 oscillator / internal(FOSC/4)
-        
+
 }
 
 void TIMER1_SetPs(PRESCALE prescale)
@@ -88,8 +88,11 @@ void TIMER1_SetPs(PRESCALE prescale)
         case PS3: //Timer 0 prescale = 11
             T1CONbits.T1CKPS0 = 1;
             T1CONbits.T1CKPS1 = 1;
+            break;
+        default:
+            break;
     }
-    
+
 }
 
 void TIMER1_Set(uint16_t val)
@@ -102,4 +105,3 @@ void TIMER0_HSet(char val)
 {
     TMR0H = val;
 }*/
-
