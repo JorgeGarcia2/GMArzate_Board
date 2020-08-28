@@ -1,0 +1,13 @@
+Basics_4550.X/build/
+Basics_4550.X/debug/
+Basics_4550.X/nbproject/
+Basics_4550.X/Makefile
+*.cmf
+*.elf
+*.hxl
+*.mum
+*.o
+*.rlf
+*.sdb
+*.sym
+*.xml
