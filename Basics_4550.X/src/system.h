@@ -1,30 +1,15 @@
-/*******************************************************************************
-Copyright 2016 Microchip Technology Inc. (www.microchip.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-To request to license the code under the MLA license (www.microchip.com/mla_license), 
-please contact mla_licensing@microchip.com
-*******************************************************************************/
-
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#define _XTAL_FREQ  48000000
+
 #include <xc.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+
+#define _XTAL_FREQ  48000000
+#define setbit (var, bit) ((var) |= (1<<(bit)))
+#define clearbit (var, bit) ((var) =~ (1<<(bit)))
 
 #include "serial.h"
 #include "print/my_print.h"
@@ -33,6 +18,7 @@ please contact mla_licensing@microchip.com
 #include "leds.h"
 #include "interrupts.h"
 #include "timer.h"
+#include "lcd.h"
 
 void SYSTEM_Init(void);
 
