@@ -1,3 +1,10 @@
+/*************************************************************************
+* File: dht11.h
+* Author: Jorge
+* Date: August, 2020
+*
+*************************************************************************/
+
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
@@ -11,14 +18,15 @@
 #define setbit (var, bit) ((var) |= (1<<(bit)))
 #define clearbit (var, bit) ((var) =~ (1<<(bit)))
 
-#include "serial.h"
 #include "print/my_print.h"
+#include "serial.h"
 #include "kbd.h"
 //#include "buttons.h"
 #include "leds.h"
 #include "interrupts.h"
 #include "timer.h"
 #include "lcd.h"
+#include "dht11.h"
 
 void SYSTEM_Init(void);
 

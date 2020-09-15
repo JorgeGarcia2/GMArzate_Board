@@ -1,3 +1,4 @@
+
 #include "lcd.h"
 
 bool lcd_r = 0;
@@ -69,8 +70,6 @@ void LCD_WriteChar(char wData)
     {
         if(lcd_r == 0)
             LCD_SetRowCol(1,0);
-        else 
-            LCD_RH();
     }
 }
 
@@ -158,8 +157,7 @@ void LCD_Write(char *str)
         switch(str[i])
         {
             case '\n':
-                lcd_r ^= 1;
-                LCD_SetRowCol(lcd_r, lcd_c);
+                LCD_SetRowCol(1, lcd_c);
                 break;
             case '\r':
                 lcd_c = 0;
@@ -171,3 +169,17 @@ void LCD_Write(char *str)
         i++;
     }
 }
+
+#ifdef MY_PRINT_H
+int LCD_Printf(const char *restrict fmt, ...)
+{
+    char strout[STR_SIZE];
+    int ret;
+    va_list ap;
+    va_start(ap, fmt);
+    ret = my_vsprintf(strout, fmt, ap);
+    LCD_Write(strout);
+    va_end(ap);
+    return ret;
+}
+#endif

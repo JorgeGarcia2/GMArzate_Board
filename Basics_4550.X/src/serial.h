@@ -19,5 +19,8 @@ char SERIAL_ReadChar(void);
 
 int SERIAL_Read(char* str);
 
+#ifdef MY_PRINT_H
+int SERIAL_Printf(const char *restrict fmt, ...);
+#endif
 
 #endif

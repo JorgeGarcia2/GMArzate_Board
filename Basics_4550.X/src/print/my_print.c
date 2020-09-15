@@ -5,11 +5,8 @@
 * Funcion: int my_vprintf(const char *sformat, ... );
 ********************************************************************/
 
-int my_vprintf(const char *sformat, ... ) {
-	va_list valist;
-	/* Inicializa valist para el numero de argumentos*/
-	va_start(valist, 10);
-
+int my_vsprintf(char *restrict str, const char *restrict sformat, va_list valist) 
+{
 	const char tipo[]= {'%','c','s','d','i','x','X','o','u','f','g','G','e','E','n'}; //Tipos de formato
 	char string[STR_SIZE] = ""; //String de salida 
 	int length = 0; //Tamaño del stting de salida
@@ -21,7 +18,7 @@ int my_vprintf(const char *sformat, ... ) {
 	double double_temp; //Variable temporar tipo doble
 	char ch[2]={0,0}; //Vector para recorrer los caracteres en my_vprintf();)
 	char format[10]; // buffer para las especificaciones de los formatos
-	char buffer[BUFF_SIZE] = " "; //buffer para los textos formateados
+	char buffer[BUFF_SIZE] = ""; //buffer para los textos formateados
 	int expA; //Exponente del numero en notacion cientifica "e"
 	int prec; //Especificacion de la presicion 
 	int width;//Especificacion del ancho de campo 
@@ -197,9 +194,6 @@ int my_vprintf(const char *sformat, ... ) {
 			length++;
 		}
 	}
-	// limpia la memoria para valist
-	va_end(valist);
-	//Sustituir la funcion segun la libreria usada para la comunicacion con la terminal serie.
-	SERIAL_Write(string); 
+	strcpy(str, string);
 	return error < 0? error : length;
 }

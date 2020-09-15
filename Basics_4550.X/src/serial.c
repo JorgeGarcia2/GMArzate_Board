@@ -84,3 +84,18 @@ int SERIAL_Read(char* str)
         len++;
     }
 }
+
+
+#ifdef MY_PRINT_H
+int SERIAL_Printf(const char *restrict fmt, ...)
+{
+    char strout[STR_SIZE];
+    int ret;
+    va_list ap;
+    va_start(ap, fmt);
+    ret = my_vsprintf(strout, fmt, ap);
+    va_end(ap);
+    SERIAL_Write(strout);
+    return ret;
+}
+#endif

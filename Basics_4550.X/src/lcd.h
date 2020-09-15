@@ -1,3 +1,10 @@
+/*************************************************************************
+* File: dht11.h
+* Author: Jorge
+* Date: September, 2020
+*
+*************************************************************************/
+
 #ifndef LCD_H
 #define LCD_H
 
@@ -196,6 +203,9 @@ void CreateChar (char *pattern, uint8_t pos);
 
 void LCD_Write(char *str);
 
+#ifdef MY_PRINT_H
+int LCD_Printf(const char *restrict fmt, ...);
+#endif
 
 
 #endif	/* LCD_H */

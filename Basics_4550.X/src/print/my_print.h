@@ -37,5 +37,5 @@
 * Valor de retorno: Retorna el número de caracteres imprimidos o un número negativo en caso de haber un error.
 *
 ********************************************************************/
-int my_vprintf(const char *sformat, ...);
+int my_vsprintf(char *restrict str, const char *sformat, va_list valist);
 #endif
