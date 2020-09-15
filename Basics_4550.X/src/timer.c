@@ -1,5 +1,8 @@
 #include "timer.h"
 
+uint8_t PS_TMR0 = 0;
+uint8_t PS_TMR1 = 0;
+
 void TIMER0_Int(bool t0_8b, bool t0_cs, bool t0_se, bool t0_psa)
 {
     T0CONbits.TMR0ON = 1; //Timer 0: ON / OFF
@@ -9,6 +12,10 @@ void TIMER0_Int(bool t0_8b, bool t0_cs, bool t0_se, bool t0_psa)
     T0CONbits.PSA = t0_psa; //Timer 0 preescaler: is not assigned / is assigned
     if (t0_cs)
         TRISAbits.RA4 = 1; //RA4 as an input
+}
+void TIMER0_End(void)
+{
+    T0CONbits.TMR0ON = 0;
 }
 
 void TIMER0_SetPs(PRESCALE prescale)
@@ -55,8 +62,35 @@ void TIMER0_SetPs(PRESCALE prescale)
             T0CONbits.T0PS1 = 1;
             T0CONbits.T0PS2 = 1;
     }
-
+    PS_TMR0 = prescale;
 }
+
+void TIMER0_SetReg(uint16_t val)
+{
+    TMR0H = val >> 8;
+    TMR1L = val;
+}
+
+bool TIMER0_SetTime(float time)
+{
+    float CT = 4.0/(_XTAL_FREQ/1000.0); //Cycle time in ms
+    float MC = T0CONbits.T08BIT? 255: 65535;
+    
+    float tmax = CT * PS_TMR0 * MC;
+    float tmin = CT * PS_TMR0;
+    bool e = 0;
+    
+    if ((time <= tmax)&& (time >= tmin)) 
+        TIMER0_SetReg(MC - lround(time/(CT*(PS_TMR0+1.0))));
+    else
+    {
+        TIMER0_End();
+        e = 1;
+    }
+    return e; 
+}
+
+
 
 void TIMER1_Int(bool t1_cs, bool t0_cs, bool t0_se, bool t0_psa)
 {
@@ -92,10 +126,10 @@ void TIMER1_SetPs(PRESCALE prescale)
         default:
             break;
     }
-
+    PS_TMR1 = prescale;
 }
 
-void TIMER1_Set(uint16_t val)
+void TIMER1_SetReg(uint16_t val)
 {
     TMR1H = val >> 8;
     TMR1L = val;
